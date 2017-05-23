@@ -1,0 +1,25 @@
+﻿@model CoachPosition.Web.Models.IndexModel
+@{
+    ViewBag.Title = "Index";
+}
+<h3 class="info_name">Информация о поезде *</h3>
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="div_fields">
+        <table>
+            <tr class="pad_tr">
+                <td><p>Номер поезда</p></td>
+                <td>@Html.TextBoxFor(m => m.NumTrain, new { @class = "index_field" })</td>
+            </tr>
+            <tr class="pad_tr">
+                <td><p>Номер вагона</p></td>
+                <td>@Html.TextBoxFor(m => m.NumCar, new { @class = "index_field" })</td>
+            </tr>
+        </table>
+    </div>
+    <div class="btn_center">
+        <input type="submit" class="btn_index" value="Показать" />
+    </div>
+}
+
+<h4 id="warn_info">* Обращаем ваше внимание, что для получения корректной информации, необходимо производить проверку минимум за 20 мин. до прибытия поезда.</h4>

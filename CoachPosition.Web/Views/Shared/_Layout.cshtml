@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - РЖД-Инфо</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <img src="~/Content/Images/logo.png">
+    </header>
+    <div class="all">
+        <div class="content">
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - ОАО "РЖД"</p>
+    </footer>
+</body>
+</html>

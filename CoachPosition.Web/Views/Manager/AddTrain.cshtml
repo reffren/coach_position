@@ -1,0 +1,24 @@
+﻿@model CoachPosition.Data.Entities.Train
+@{
+    ViewBag.Title = "AddTrain";
+}
+<h3 class="info_name">Информация о составе поезда *</h3>
+@using (Html.BeginForm("AddTrain", "Manager", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+{
+    <div class="div_fields">
+        <table>
+            <tr class="pad_tr">
+                <td>Номер поезда</td>
+                <td>@Html.TextBoxFor(m => m.NumTrain, new { @class = "manager_field" })</td>
+            </tr>
+            <tr class="pad_tr">
+                <td>Номера вагона</td>
+                <td>@Html.TextBoxFor(m => m.NumCars, new { @class = "manager_field" })</td>
+            </tr>
+        </table>
+    </div>
+    <div class="btn_center">
+        <input type="submit" class="btn_index" value="Сохранить" />
+    </div>
+}
+<h4 id="warn_info">* Номера вагонов вводятся цифрами, без использования каких-либо знаков препинания. Вагоны рестораны, почтовые вагоны и т.д. обозначаются цифрой 0.</h4>
