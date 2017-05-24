@@ -12,7 +12,6 @@ namespace CoachPosition.Web.Controllers
     public class HomeController : Controller
     {
         private IRepository _repository;
-       // private const string Section = "A,B,C,D,E,F,G";
         Dictionary<int, string> section;
 
         public HomeController(IRepository repository)
@@ -30,6 +29,7 @@ namespace CoachPosition.Web.Controllers
             string getSection="Пожалуйста проверьте введенные данные";
             string numTrain = "";
             int passengerCar = model.NumCar;
+            List<int> cars;
             section = new Dictionary<int, string>();
 
             if (ModelState.IsValid)
@@ -37,20 +37,64 @@ namespace CoachPosition.Web.Controllers
                 var infoTrain = _repository.Trains.FirstOrDefault(f => f.NumTrain == model.NumTrain);
                 if (infoTrain != null)
                 {
-                    int carNumber = infoTrain.NumCars;
-                    numTrain = infoTrain.NumTrain;
-                    var cars = carNumber.ToString().Select(x => int.Parse(x.ToString())); //split integer
-                    int i = 0;
+                    int n = 0;
+                    cars = new List<int>();
+                    string s = infoTrain.NumCars;
+                    string[] values = s.Split(','); //first we are splitting by comma
+
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        string d = values[i];
+                        bool isNumeric = int.TryParse(d, out n); //in case if d=0 
+                        if (isNumeric)
+                        {
+                            cars.Add(0);
+                        }
+                        else
+                        {
+                            string[] range = d.Split('-'); //after we are splitting by dash
+
+
+                            for (int l = 0; l < range.Length; l++) //range from 1-6, for example (1,2,3,4,5,6)
+                            {
+                                int a = Int32.Parse(range[l]); //for example a = 1
+                                l++;
+                                int b = Int32.Parse(range[l]); //for example b = 6
+
+                                if (a > b) //in case if the range will be wice versa (6-1)
+                                {
+                                    //int tempVar = a;
+                                    //a = b;
+                                    //b = tempVar;
+                                    for (int y = a; y > b - 1; y--) //range from 6-1, for example (6,5,4,3,2,1)
+                                    {
+                                        cars.Add(y);
+                                    }
+                                }
+                                else
+                                {
+                                    for (int y = a; y < b + 1; y++) //range from 1-6, for example (1,2,3,4,5,6)
+                                    {
+                                        cars.Add(y);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    int x = 0;
                     foreach (int car in cars)
                     {
-                        Sections sect = (Sections) i;
+                        Sections sect = (Sections)x;
                         if (car == 0)
                         {
-                            int carZero = 1000 + i; //exclude double key in dictionary(in case 0 and 0)
+                            int carZero = 1000 + x; //exclude double key in dictionary(in case 0 and 0)
                             section.Add(carZero, sect.ToString());
-                        } else
+                        }
+                        else
                             section.Add(car, sect.ToString());
-                        i++;
+                        x++;
                     }
 
                     getSection = section[model.NumCar];

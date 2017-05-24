@@ -11,6 +11,6 @@ namespace CoachPosition.Data.Entities
         [Key]
         public int TrainID { get; set; }
         public string NumTrain { get; set; }
-        public int NumCars { get; set; }
+        public string NumCars { get; set; }
     }
 }
