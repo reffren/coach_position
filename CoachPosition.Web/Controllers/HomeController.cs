@@ -29,59 +29,15 @@ namespace CoachPosition.Web.Controllers
             string getSection="Пожалуйста проверьте введенные данные";
             string numTrain = "";
             int passengerCar = model.NumCar;
-            List<int> cars;
             section = new Dictionary<int, string>();
 
             if (ModelState.IsValid)
             {
                 var infoTrain = _repository.Trains.FirstOrDefault(f => f.NumTrain == model.NumTrain);
+                numTrain = infoTrain.NumTrain; // number of train
                 if (infoTrain != null)
                 {
-                    int n = 0;
-                    cars = new List<int>();
-                    string s = infoTrain.NumCars;
-                    string[] values = s.Split(','); //first we are splitting by comma
-
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        string d = values[i];
-                        bool isNumeric = int.TryParse(d, out n); //in case if d=0 
-                        if (isNumeric)
-                        {
-                            cars.Add(0);
-                        }
-                        else
-                        {
-                            string[] range = d.Split('-'); //after we are splitting by dash
-
-
-                            for (int l = 0; l < range.Length; l++) //range from 1-6, for example (1,2,3,4,5,6)
-                            {
-                                int a = Int32.Parse(range[l]); //for example a = 1
-                                l++;
-                                int b = Int32.Parse(range[l]); //for example b = 6
-
-                                if (a > b) //in case if the range will be wice versa (6-1)
-                                {
-                                    //int tempVar = a;
-                                    //a = b;
-                                    //b = tempVar;
-                                    for (int y = a; y > b - 1; y--) //range from 6-1, for example (6,5,4,3,2,1)
-                                    {
-                                        cars.Add(y);
-                                    }
-                                }
-                                else
-                                {
-                                    for (int y = a; y < b + 1; y++) //range from 1-6, for example (1,2,3,4,5,6)
-                                    {
-                                        cars.Add(y);
-                                    }
-                                }
-                            }
-                        }
-                    }
-
+                    var cars = infoTrain.NumCars.Split(',').Select(int.Parse).ToList(); //convert comma separated string into a List<int>
 
                     int x = 0;
                     foreach (int car in cars)
@@ -97,7 +53,7 @@ namespace CoachPosition.Web.Controllers
                         x++;
                     }
 
-                    getSection = section[model.NumCar];
+                    getSection = section[model.NumCar]; // get section from Dictionary by key
                 }
                 else
                 {

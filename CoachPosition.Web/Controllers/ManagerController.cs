@@ -24,12 +24,63 @@ namespace CoachPosition.Web.Controllers
         [HttpPost]
         public ActionResult AddTrain(Train train)
         {
-         //   if (ModelState.IsValid)
-          //  {
-                _repository.SaveTrain(train);
-          //  }
+            List<int> cars;
+            if (ModelState.IsValid)
+            {
+                int n = 0;
+                cars = new List<int>();
+                string s = train.NumCars;
+                string[] values = s.Split(','); //first we are splitting by comma
 
-            return RedirectToAction("AddTrain", "Manager");
+                for (int i = 0; i < values.Length; i++)
+                {
+                    string d = values[i];
+                    bool isNumeric = int.TryParse(d, out n); //in case if d=0 
+                    if (isNumeric)
+                    {
+                        cars.Add(0);
+                    }
+                    else
+                    {
+                        string[] range = d.Split('-'); //after we are splitting by dash
+
+
+                        for (int l = 0; l < range.Length; l++) //range from 1-6, for example (1,2,3,4,5,6)
+                        {
+                            int a = Int32.Parse(range[l]); //for example a = 1
+                            l++;
+                            int b = Int32.Parse(range[l]); //for example b = 6
+
+                            if (a > b) //in case if the range will be wice versa (6-1)
+                            {
+                                //int tempVar = a;
+                                //a = b;
+                                //b = tempVar;
+                                for (int y = a; y > b - 1; y--) //range from 6-1, for example (6,5,4,3,2,1)
+                                {
+                                    cars.Add(y);
+                                }
+                            }
+                            else
+                            {
+                                for (int y = a; y < b + 1; y++) //range from 1-6, for example (1,2,3,4,5,6)
+                                {
+                                    cars.Add(y);
+                                }
+                            }
+                        }
+                    }
+                }
+                train.NumCars = string.Join(",", cars); //convert array of integers (cars) to comma-separated string
+
+                _repository.SaveTrain(train);
+                ViewBag.Message = "Внесенные данные сохранены";
+            }
+            else
+            {
+                 ViewBag.Message = "Что-то пошло не так, пожалуйста, проверьте формат, введенных данных и повторите попытку.";
+            }
+            return View();
         }
 
         public ActionResult ListTrains()

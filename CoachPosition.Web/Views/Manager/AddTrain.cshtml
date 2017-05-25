@@ -5,6 +5,8 @@
 <h3 class="info_name">Информация о составе поезда *</h3>
 @using (Html.BeginForm("AddTrain", "Manager", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
 {
+    @Html.ValidationSummary(true)
+    <h3 class="message">@ViewBag.Message</h3>
     <div class="div_fields">
         <table>
             <tr class="pad_tr">

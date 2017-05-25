@@ -1,7 +1,9 @@
 ﻿.all {
     width: 100%;
 }
-
+.message {
+    color: #e21a1a;
+}
 /*Home*/
 
 #warn_info {
