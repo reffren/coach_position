@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CoachPosition.Web.Controllers
 {
+    [Authorize]
     public class ManagerController : Controller
     {
         private IRepository _repository;
@@ -29,8 +30,8 @@ namespace CoachPosition.Web.Controllers
             {
                 int n = 0;
                 cars = new List<int>();
-                string s = train.NumCars;
-                string[] values = s.Split(','); //first we are splitting by comma
+                string numCars = train.NumCars;
+                string[] values = numCars.Split(','); //first we are splitting by comma
 
                 for (int i = 0; i < values.Length; i++)
                 {
@@ -50,6 +51,12 @@ namespace CoachPosition.Web.Controllers
                             int a = Int32.Parse(range[l]); //for example a = 1
                             l++;
                             int b = Int32.Parse(range[l]); //for example b = 6
+
+                            if (a > 26 && b > 26)
+                            {
+                                ViewBag.Message = "онда из цифер больше 26, пожалуйста, проверьте вводимые данные и повторите попытку.";
+                                return View();
+                            }
 
                             if (a > b) //in case if the range will be wice versa (6-1)
                             {
@@ -72,9 +79,9 @@ namespace CoachPosition.Web.Controllers
                     }
                 }
                 train.NumCars = string.Join(",", cars); //convert array of integers (cars) to comma-separated string
-
+                train.TrainID = _repository.Trains.Where(w => w.NumTrain == train.NumTrain).Select(s => s.TrainID).FirstOrDefault();
                 _repository.SaveTrain(train);
-                ViewBag.Message = "Внесенные данные сохранены";
+                ViewBag.Message = "Внесенные данные " + numCars + " сохранены.";
             }
             else
             {

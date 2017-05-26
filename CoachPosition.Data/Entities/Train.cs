@@ -15,7 +15,7 @@ namespace CoachPosition.Data.Entities
         public string NumTrain { get; set; }
 
         [Required(ErrorMessage = "Не заполнено поле 'Номер вагона'")]
-        [RegularExpression(@"^\d[1-26]", ErrorMessage = "Недопустимый формат данных")]
+        [RegularExpression(@"^[0-9,-]{1,80}$", ErrorMessage = "Недопустимый формат данных")]
         public string NumCars { get; set; }
     }
 }

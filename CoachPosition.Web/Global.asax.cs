@@ -1,4 +1,5 @@
-﻿using CoachPosition.Web.Infrastructure;
+﻿using CoachPosition.Web.App_Start;
+using CoachPosition.Web.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace CoachPosition.Web
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
     }
 }
