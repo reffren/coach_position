@@ -3,12 +3,28 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - РЖД-Инфо</title>
+    <title>@ViewBag.Title РЖД-Инфо</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <header>
-        <img src="~/Content/Images/logo.png">
+        <table id="clientBarTable">
+            <tr>
+                <td id="td_top_logo">
+                    <img src="~/Content/Images/logo.png">
+                </td>
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <td id="td_top_btn">
+                            <input type="submit" class="btn_log_off" value="Выйти" />
+                        </td>
+                    }
+                }
+            </tr>
+        </table>
     </header>
     <div class="all">
         <div class="content">

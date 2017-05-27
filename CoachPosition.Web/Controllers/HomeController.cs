@@ -26,17 +26,23 @@ namespace CoachPosition.Web.Controllers
         [HttpPost]
         public ActionResult Index(IndexModel model)
         {
-            string getSection="Пожалуйста проверьте введенные данные";
+            string getSection="";
             string numTrain = "";
             int passengerCar = model.NumCar;
             section = new Dictionary<int, string>();
 
             if (ModelState.IsValid)
             {
+                if (passengerCar > 26)
+                {
+                    ViewBag.Message = "Номер вагона должен содержать цифры от 1 до 26.";
+                    return View();
+                }
+                    
                 var infoTrain = _repository.Trains.FirstOrDefault(f => f.NumTrain == model.NumTrain);
-                numTrain = infoTrain.NumTrain; // number of train
                 if (infoTrain != null)
                 {
+                    numTrain = infoTrain.NumTrain; // number of train
                     var cars = infoTrain.NumCars.Split(',').Select(int.Parse).ToList(); //convert comma separated string into a List<int>
 
                     int x = 0;
@@ -54,13 +60,19 @@ namespace CoachPosition.Web.Controllers
                     }
 
                     getSection = section[model.NumCar]; // get section from Dictionary by key
+
+                    return RedirectToAction("Section", "Home", new { numTrain = numTrain, numCar = passengerCar, sectionValue = getSection });
                 }
-                else
+                else // db is empty
                 {
-                    return RedirectToAction("Section", "Home");
+                    ViewBag.Message = "Информация по данному поезду отсутствует.";
+                    return View();
                 }
             }
-            return RedirectToAction("Section", "Home", new { numTrain = numTrain, numCar = passengerCar, sectionValue = getSection });
+            else //Model is not valid
+            {
+                return View();
+            }
         }
 
         public ActionResult Section(string numTrain, int numCar, string sectionValue)

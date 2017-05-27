@@ -1,7 +1,20 @@
 ﻿.all {
     width: 100%;
 }
-
+.message {
+    color: #e21a1a;
+}
+#clientBarTable {
+    width: 100%;
+}
+#td_top_logo {
+    vertical-align: top;
+    text-align: left;
+}
+#td_top_btn {
+    vertical-align: top;
+    text-align: right;
+}
 /*Home*/
 
 #warn_info {
@@ -11,7 +24,19 @@
 .pad_tr td {
     color: #575d5e;
 }
-.btn_index {
+.btn_log_off {
+    background-color: #e21a1a;
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.btn_main {
     background-color: #e21a1a;
     border: none;
     color: white;
@@ -27,7 +52,7 @@
 
 .index_field {
     height: 30px;
-    width: 200px;
+    width: 100%;
     font-size: 25px;
 }
 /*Section*/
@@ -55,9 +80,19 @@
 /*Manager*/
 .manager_field {
     height: 30px;
-    width: 200px;
+    width: 50%;
     font-size: 25px;
 }
+#manager_table {
+    width: 100%;
+}
+
+/*Account*/
+.editor_label {
+    color: #575d5e;
+    font-size: 1.2em;
+}
+
 @media only screen and (max-width : 770px) {
 
 /*Home*/
@@ -75,6 +110,10 @@
     font-size: 25px;
 }
 
+.pad_tr td {
+    color: #575d5e;
+}
+
 /*Section*/
 .info_name {
     text-align: center;
@@ -87,6 +126,9 @@
     height: 30px;
     width: 100%;
     font-size: 25px;
+}
+#manager_table {
+    width: 100%;
 }
 footer {
     padding-top: 50px;

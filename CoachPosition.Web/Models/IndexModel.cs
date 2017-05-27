@@ -9,10 +9,13 @@ namespace CoachPosition.Web.Models
     public class IndexModel
     {
         [Required(ErrorMessage = "Не заполнено поле 'Номер поезда'")]
+        [Display(Name = "Номер поезда")]
+        [RegularExpression(@"^[a-zA-ZА-Яа-я0-9]{1,5}$", ErrorMessage = "Недопустимый формат данных")]
         public string NumTrain { get; set; }
 
         [Required(ErrorMessage = "Не заполнено поле 'Номер вагона'")]
-        //[RegularExpression(@"^\d[1-26]", ErrorMessage = "Недопустимый формат данных")]
+        [Display(Name = "Номер вагона")]
+        [RegularExpression(@"^[1-9][0-6]{0,3}$", ErrorMessage = "Номер вагона должен содержать цифры от 1 до 26.")]
         public int NumCar { get; set; }
     }
 }

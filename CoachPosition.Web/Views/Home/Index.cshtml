@@ -1,6 +1,6 @@
 ﻿@model CoachPosition.Web.Models.IndexModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Информация о поезде";
 }
 <h3 class="info_name">Информация о поезде *</h3>
 @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -8,19 +8,23 @@
     @Html.ValidationSummary(true)
     <h3 class="message">@ViewBag.Message</h3>
     <div class="div_fields">
-        <table>
-            <tr class="pad_tr">
-                <td><p>Номер поезда</p></td>
-                <td>@Html.TextBoxFor(m => m.NumTrain, new { @class = "index_field" })</td>
-            </tr>
-            <tr class="pad_tr">
-                <td><p>Номер вагона</p></td>
-                <td>@Html.TextBoxFor(m => m.NumCar, new { @class = "index_field" })</td>
-            </tr>
-        </table>
+        <div class="editor_label">
+            @Html.LabelFor(m => m.NumTrain)
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.NumTrain, new { @class = "index_field" })
+            @Html.ValidationMessageFor(m => m.NumTrain, null, new { @class = "red_color" })
+        </div>
+        <div class="editor_label">
+            @Html.LabelFor(m => m.NumCar)
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.NumCar, new { @class = "index_field" })
+            @Html.ValidationMessageFor(m => m.NumCar, null, new { @class = "red_color" })
+        </div>
     </div>
     <div class="btn_center">
-        <input type="submit" class="btn_index" value="Показать" />
+        <input type="submit" class="btn_main" value="Показать" />
     </div>
 }
 

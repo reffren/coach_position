@@ -13,6 +13,11 @@ namespace CoachPosition.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(null,
+            "add",
+            new { controller = "Manager", action = "AddTrain" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
