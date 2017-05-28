@@ -100,8 +100,11 @@ namespace CoachPosition.Web.Controllers
                     }
                 }
                 train.NumCars = string.Join(",", cars); //convert array of integers (cars) to comma-separated string
+
                 train.TrainID = _repository.Trains.Where(w => w.NumTrain == train.NumTrain).Select(s => s.TrainID).FirstOrDefault();
+
                 _repository.SaveTrain(train);
+
                 ViewBag.Message = "Внесенные данные " + numCars + " сохранены.";
             }
             else

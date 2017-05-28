@@ -28,6 +28,7 @@ namespace CoachPosition.Web.Controllers
         {
             string getSection="";
             string numTrain = "";
+            int numWay = 0;
             int passengerCar = model.NumCar;
             section = new Dictionary<int, string>();
 
@@ -43,6 +44,7 @@ namespace CoachPosition.Web.Controllers
                 if (infoTrain != null)
                 {
                     numTrain = infoTrain.NumTrain; // number of train
+                    numWay = infoTrain.NumWay;
                     var cars = infoTrain.NumCars.Split(',').Select(int.Parse).ToList(); //convert comma separated string into a List<int>
 
                     int x = 0;
@@ -58,10 +60,17 @@ namespace CoachPosition.Web.Controllers
                             section.Add(car, sect.ToString());
                         x++;
                     }
-
+                    if (section.ContainsKey(model.NumCar))  //check (in Dictionary) value(car) of user exists or not
+                    {
                     getSection = section[model.NumCar]; // get section from Dictionary by key
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Данного вагона в поезде - " + numTrain + " не существует, пожалуйста, проверьте введенные данные.";
+                        return View();
+                    }
 
-                    return RedirectToAction("Section", "Home", new { numTrain = numTrain, numCar = passengerCar, sectionValue = getSection });
+                    return RedirectToAction("Section", "Home", new { numTrain = numTrain, numCar = passengerCar, sectionValue = getSection, way = numWay });
                 }
                 else // db is empty
                 {
@@ -75,11 +84,12 @@ namespace CoachPosition.Web.Controllers
             }
         }
 
-        public ActionResult Section(string numTrain, int numCar, string sectionValue)
+        public ActionResult Section(string numTrain, int numCar, string sectionValue, int way)
         {
             SectionModel sectModel = new SectionModel
             {
                 NumTrain = numTrain,
+                NumWay = way,
                 NumCar = numCar,
                 SectionValue = sectionValue
 

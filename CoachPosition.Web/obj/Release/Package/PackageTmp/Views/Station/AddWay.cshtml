@@ -1,0 +1,39 @@
+﻿@model CoachPosition.Data.Entities.Train
+@{
+    ViewBag.Title = "AddTrain";
+}
+
+<h3 class="info_name">Информация о номере пути для прибывающего поезда *</h3>
+@using (Html.BeginForm("AddWay", "Station", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <h3 class="message">@ViewBag.Message</h3>
+    <div class="div_fields">
+        <div class="editor_label">
+            @Html.LabelFor(m => m.NumTrain)
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.NumTrain, new { @class = "manager_field" })
+            @Html.ValidationMessageFor(m => m.NumTrain, null, new { @class = "red_color" })
+            @Html.HiddenFor(m => m.NumCars, new { Value = "0" })
+        </div>
+        <div class="editor_label">
+            @Html.LabelFor(m => m.NumWay)
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.NumWay, new { @class = "manager_field" })
+            @Html.ValidationMessageFor(m => m.NumWay, null, new { @class = "red_color" })
+        </div>
+    </div>
+    <div class="btn_center">
+        @if (ViewBag.Message == null)
+        {
+            <input type="submit" class="btn_main" value="Сохранить" />
+        }
+        else
+        {
+            <input type="submit" class="btn_main" value="Редактировать" />
+        }
+    </div>
+}
+<h4 id="warn_info">* Для ввода номера пути используются цифры.</h4>

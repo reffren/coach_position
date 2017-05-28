@@ -6,15 +6,22 @@
     <h3 class="info_name">Информация</h3>
     <table>
         <tr class="pad_tr">
-            <td><h2 class="grey_color">Номер поезда: </h2></td>
+            <td><h2 class="grey_color">Поезд: </h2></td>
             <td><h1 class="red_color"> @Model.NumTrain</h1></td>
         </tr>
         <tr class="pad_tr">
-            <td><h2 class="grey_color">Номер вагона: </h2></td>
+            <td><h2 class="grey_color">Вагон: </h2></td>
             <td><h1 class="red_color"> @Model.NumCar</h1></td>
         </tr>
+        @if (Model.NumWay > 0)
+        {
         <tr class="pad_tr">
-            <td><h2 class="grey_color">Секция на <br /> платформе: </h2></td>
+            <td><h2 class="grey_color">Путь: </h2></td>
+            <td><h1 class="red_color"> @Model.NumWay</h1></td>
+        </tr>
+        }
+        <tr class="pad_tr">
+            <td><h2 class="grey_color">Секция: </h2></td>
             <td><h1 class="red_color"> @Model.SectionValue</h1></td>
         </tr>
     </table>

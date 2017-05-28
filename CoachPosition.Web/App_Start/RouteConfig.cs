@@ -14,8 +14,13 @@ namespace CoachPosition.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(null,
-            "add",
+            "cars",
             new { controller = "Manager", action = "AddTrain" }
+            );
+
+            routes.MapRoute(null,
+            "way",
+            new { controller = "Station", action = "AddWay" }
             );
 
             routes.MapRoute(
