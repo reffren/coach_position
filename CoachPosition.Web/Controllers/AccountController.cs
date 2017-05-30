@@ -61,7 +61,8 @@ namespace CoachPosition.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неккоректное имя пользователя или e-mail.");
+                    ViewBag.Message = "Неккоректное имя пользователя или e-mail.";
+                    return View();
                 }
             }
 

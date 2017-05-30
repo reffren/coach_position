@@ -11,7 +11,7 @@
 </p>*@
 
 @Html.ValidationSummary(true, "К сожалению произошла ошибка при вводе данных")
-
+<h3 class="message">@ViewBag.Message</h3>
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -22,7 +22,7 @@
             </div>
             <div class="editor-field">
                 @Html.TextBoxFor(m => m.UserName, new { @class = "manager_field" })
-                @Html.ValidationMessageFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName, null, new { @class = "red_color" })
             </div>
 
             <div class="editor_label">
@@ -30,7 +30,7 @@
             </div>
             <div class="editor_field">
                 @Html.PasswordFor(m => m.Password, new { @class = "manager_field" })
-                @Html.ValidationMessageFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "red_color" })
             </div>
             <p class="btn_center">
                 <input type="submit" class="btn_main" value="Войти" />
