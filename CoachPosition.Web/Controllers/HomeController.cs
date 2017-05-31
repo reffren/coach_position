@@ -34,9 +34,9 @@ namespace CoachPosition.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (passengerCar > 26)
+                if (passengerCar > 20)
                 {
-                    ViewBag.Message = "Номер вагона должен содержать цифры от 1 до 26.";
+                    ViewBag.Message = "Номер вагона должен содержать цифры от 1 до 20.";
                     return View();
                 }
                     
@@ -48,18 +48,44 @@ namespace CoachPosition.Web.Controllers
                     var cars = infoTrain.NumCars.Split(',').Select(int.Parse).ToList(); //convert comma separated string into a List<int>
 
                     int x = 0;
-                    foreach (int car in cars)
+
+                    if (cars[0] == 99) //way of train (if the locomotive(99) on the left side, section will be A,B,C,D,E...)
                     {
-                        Sections sect = (Sections)x;
-                        if (car == 0)
+                        foreach (int car in cars)
                         {
-                            int carZero = 1000 + x; //exclude double key in dictionary(in case 0 and 0)
-                            section.Add(carZero, sect.ToString());
+                            if (car != 99) //skip the locomotive(99)
+                            {
+                                SectionsAZ sect = (SectionsAZ)x;
+                                if (car == 0)
+                                {
+                                    int carZero = 1000 + x; //exclude double key in dictionary(in case 0 and 0)
+                                    section.Add(carZero, sect.ToString());
+                                }
+                                else
+                                    section.Add(car, sect.ToString());
+                                x++;
+                            }
                         }
-                        else
-                            section.Add(car, sect.ToString());
-                        x++;
                     }
+                    else //way of train (if the locomotive(99) on the right side, section will be E,D,C,B,A...)
+                    {
+                        foreach (int car in cars) 
+                        {
+                            if (car != 99) //skip the locomotive(99)
+                            {
+                                SectionsZA sect = (SectionsZA)x;
+                                if (car == 0)
+                                {
+                                    int carZero = 1000 + x; //exclude double key in dictionary(in case 0 and 0)
+                                    section.Add(carZero, sect.ToString());
+                                }
+                                else
+                                    section.Add(car, sect.ToString());
+                                x++;
+                            }
+                        }
+                    }
+
                     if (section.ContainsKey(model.NumCar))  //check (in Dictionary) value(car) of user exists or not
                     {
                     getSection = section[model.NumCar]; // get section from Dictionary by key
@@ -98,8 +124,13 @@ namespace CoachPosition.Web.Controllers
         }
 	}
 
-    public enum Sections
+    public enum SectionsAZ
     {
-        A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+        A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V
+    }
+
+    public enum SectionsZA
+    {
+        V, U, T, S, R, Q, P, O, N, M, L, K, J, I, H, G, F, E, D, C, B, A
     }
 }

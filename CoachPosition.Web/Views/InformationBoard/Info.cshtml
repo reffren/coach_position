@@ -1,0 +1,72 @@
+﻿@model CoachPosition.Web.Models.InformationBoardModel
+@{
+    ViewBag.Title = "Position";
+}
+<h3 class="info_name">Информация для поезда 139НА</h3>
+<div class="way">
+    @if (Model.Way == 1)
+    {
+        <ul class="cars_position">
+            @if (Model.Cars.FirstOrDefault() < 3)
+            {
+                <li><img src="@Url.Content("~/Content/BoardImages/01.jpg")" /></li>
+            }
+            @foreach (var car in Model.Cars)
+            {
+                if (car > 0)
+                {
+                    <li><img src="@Url.Content("~/Content/BoardImages/1.jpg")" /></li>
+                }
+                else
+                {
+                    <li><img src="@Url.Content("~/Content/BoardImages/0.jpg")" /></li>
+                }
+            }
+            @if (Model.Cars.FirstOrDefault() > 3)
+            {
+                <li><img src="@Url.Content("~/Content/BoardImages/01.jpg")" /></li>
+            }
+        </ul>
+    }
+    <table class="letter_position">
+        <tr>
+            <td>1 путь<br />2 путь</td>
+            @foreach (var letter in Model.Letters)
+            {
+                <td>@letter</td>
+            }
+        </tr>
+    </table>
+    @if (Model.Way == 2)
+    {
+        <ul class="cars_position">
+            @if (Model.Cars.FirstOrDefault() < 3)
+            {
+                <li><img src="@Url.Content("~/Content/BoardImages/01.jpg")" /></li>
+            }
+            @foreach (var car in Model.Cars)
+            {
+                if (car > 0)
+                {
+                    <li><img src="@Url.Content("~/Content/BoardImages/1.jpg")" /></li>
+                }
+                else
+                {
+                    <li><img src="@Url.Content("~/Content/BoardImages/0.jpg")" /></li>
+                }
+            }
+            @if (Model.Cars.FirstOrDefault() > 3)
+            {
+                <li><img src="@Url.Content("~/Content/BoardImages/01.jpg")" /></li>
+            }
+        </ul>
+    }
+</div>
+
+<div id="platform">
+
+</div>
+
+<div id="2way">
+
+</div>

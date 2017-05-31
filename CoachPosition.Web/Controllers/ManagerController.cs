@@ -30,21 +30,45 @@ namespace CoachPosition.Web.Controllers
             {
                 int n = 0;
                 cars = new List<int>();
+                string numTrain = train.NumTrain;
                 string numCars = train.NumCars;
+                string numCarsSaved = numCars; // show to user (data is saved) without number is 99 (99 is locomotive)
+
+                foreach (char letter in numTrain) //determining way of train ("-" to west and south way, "+" to east and north way)
+                {
+                    if (letter.Equals('+') && n == 0)
+                    {
+                        numCars += ",99"; // 99 is locomotive
+                        train.NumTrain = numTrain.Replace("+", string.Empty); //remove '+' from train's name
+                        n++;
+                    }
+
+                    if (letter.Equals('-') && n == 0)
+                    {
+                        numCars = "99," + numCars; // 99 is locomotive
+                        train.NumTrain = numTrain.Replace("-", string.Empty); //remove '-' from train's name
+                        n++;
+                    }
+                }
+
+                if (n == 0) //if user didn't enter way of train ('+' or "-")
+                {
+                    ViewBag.Message = "Пожалуйста введите направление поезда, где '+' - четное направление, '-' - нечетное направление (например поезд 139НА+ (или +139НА) будет означать четное направление, 139НА- (или -139НА) нечетное).";
+
+                    return View();
+                }
+
                 string[] values = numCars.Split(','); //first we are splitting by comma
 
                 for (int i = 0; i < values.Length; i++)
                 {
                     string d = values[i];
-                    //if (d.Equals("") && d.Equals("-"))
-                    //{
-                    //    ViewBag.Message = "Недопустимый формат данных.";
-                    //    return View();
-                    //}
+
                     bool isNumeric = int.TryParse(d, out n); //checking d is number or not(1-6)
 
                     if (isNumeric)
                     {
+
                         int notZero = Int32.Parse(d);
                         if (notZero > 0) //in case if d>0 - for string: 0,7 
                             cars.Add(notZero);
@@ -73,17 +97,14 @@ namespace CoachPosition.Web.Controllers
                             }
                             int b = Int32.Parse(range[l]); //for example b = 6
 
-                            if (a > 26 && b > 26)
+                            if (a > 20 && b > 20)
                             {
-                                ViewBag.Message = "онда из цифер больше 26, пожалуйста, проверьте вводимые данные и повторите попытку.";
+                                ViewBag.Message = "онда из цифер больше 20, пожалуйста, проверьте вводимые данные и повторите попытку.";
                                 return View();
                             }
 
                             if (a > b) //in case if the range will be wice versa (6-1)
                             {
-                                //int tempVar = a;
-                                //a = b;
-                                //b = tempVar;
                                 for (int y = a; y > b - 1; y--) //range from 6-1, for example (6,5,4,3,2,1)
                                 {
                                     cars.Add(y);
@@ -105,7 +126,7 @@ namespace CoachPosition.Web.Controllers
 
                 _repository.SaveTrain(train);
 
-                ViewBag.Message = "Внесенные данные " + numCars + " сохранены.";
+                ViewBag.Message = "Внесенные данные " + numCarsSaved + " сохранены.";
             }
             else
             {
