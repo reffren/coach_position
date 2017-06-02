@@ -130,7 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\BoardImages\0.jpg" />
-    <Content Include="Content\BoardImages\01.jpg" />
+    <Content Include="Content\BoardImages\99.jpg" />
     <Content Include="Content\BoardImages\1.jpg" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Site.css" />

@@ -23,6 +23,11 @@ namespace CoachPosition.Web
             new { controller = "Station", action = "AddWay" }
             );
 
+            routes.MapRoute(null,
+            "board",
+            new { controller = "InformationBoard", action = "Info" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

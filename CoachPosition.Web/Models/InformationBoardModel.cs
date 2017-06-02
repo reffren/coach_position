@@ -9,6 +9,7 @@ namespace CoachPosition.Web.Models
     {
         public IEnumerable<int> Cars { get; set; }
         public IEnumerable<string> Letters { get; set; }
+        public string NumTrain { get; set; }
         public int Way { get; set; }
     }
 }

@@ -18,16 +18,17 @@ namespace CoachPosition.Web.Controllers
         }
         public ActionResult Info()
         {
-            var infoTrain = _repository.Trains.FirstOrDefault();
+            var infoTrain = _repository.Trains.OrderByDescending(o=>o.TrainID).FirstOrDefault();
             var cars = infoTrain.NumCars.Split(',').Select(int.Parse).ToList();
-            var letters = from letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray() select letter.ToString();
-            InformationBoardModel pos = new InformationBoardModel()
+            var letters = from letter in "ABCDEFGHIJKLMNOPQRSTUV".ToCharArray() select letter.ToString();
+            InformationBoardModel information = new InformationBoardModel()
             {
                 Cars = cars,
                 Way = infoTrain.NumWay,
-                Letters = letters
+                Letters = letters,
+                NumTrain = infoTrain.NumTrain
             };
-            return View(pos);
+            return View(information);
         }
     }
 }
