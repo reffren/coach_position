@@ -3,6 +3,7 @@ using CoachPosition.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -34,29 +35,13 @@ namespace CoachPosition.Web.Controllers
                 string numCars = train.NumCars;
                 string numCarsSaved = numCars; // show to user (data is saved) without number is 99 (99 is locomotive)
 
-                foreach (char letter in numTrain) //determining way of train ("-" to west and south way, "+" to east and north way)
-                {
-                    if (letter.Equals('+') && n == 0)
-                    {
-                        numCars += ",99"; // 99 is locomotive
-                        train.NumTrain = numTrain.Replace("+", string.Empty); //remove '+' from train's name
-                        n++;
-                    }
-
-                    if (letter.Equals('-') && n == 0)
-                    {
-                        numCars = "99," + numCars; // 99 is locomotive
-                        train.NumTrain = numTrain.Replace("-", string.Empty); //remove '-' from train's name
-                        n++;
-                    }
-                }
-
-                if (n == 0) //if user didn't enter way of train ('+' or "-")
-                {
-                    ViewBag.Message = "Пожалуйста введите направление поезда, где '+' - четное направление, '-' - нечетное направление (например поезд 139НА+ (или +139НА) будет означать четное направление, 139НА- (или -139НА) нечетное).";
-
-                    return View();
-                }
+                //determining way of train
+                string numberString = Regex.Match(numTrain, @"\d+").Value; //find and extract a numbers from a string
+                int num = Int32.Parse(numberString);
+                if (num % 2 == 0) //testing if a list of integer is odd or even
+                    numCars += ",99"; // 99 is locomotive
+                else
+                    numCars = "99," + numCars; // 99 is locomotive
 
                 string[] values = numCars.Split(','); //first we are splitting by comma
 
@@ -97,9 +82,9 @@ namespace CoachPosition.Web.Controllers
                             }
                             int b = Int32.Parse(range[l]); //for example b = 6
 
-                            if (a > 20 && b > 20)
+                            if (a > 22 && b > 22)
                             {
-                                ViewBag.Message = "онда из цифер больше 20, пожалуйста, проверьте вводимые данные и повторите попытку.";
+                                ViewBag.Message = "одна из цифер больше 22, пожалуйста, проверьте вводимые данные и повторите попытку.";
                                 return View();
                             }
 
@@ -120,13 +105,22 @@ namespace CoachPosition.Web.Controllers
                         }
                     }
                 }
-                train.NumCars = string.Join(",", cars); //convert array of integers (cars) to comma-separated string
 
-                train.TrainID = _repository.Trains.Where(w => w.NumTrain == train.NumTrain).Select(s => s.TrainID).FirstOrDefault();
+                if (cars.Count < 24) //check the size of train (no more 22 cars + locomotive)
+                {
+                    train.NumCars = string.Join(",", cars); //convert array of integers (cars) to comma-separated string
 
-                _repository.SaveTrain(train);
+                    train.TrainID = _repository.Trains.Where(w => w.NumTrain == train.NumTrain).Select(s => s.TrainID).FirstOrDefault();
 
-                ViewBag.Message = "Внесенные данные " + numCarsSaved + " сохранены.";
+                    _repository.SaveTrain(train);
+
+                    ViewBag.Message = "Внесенные данные " + numCarsSaved + " сохранены.";
+                }
+                else
+                {
+                    ViewBag.Message = "Состав поезда должен состоять максимум из 22 вагонов";
+                    return View();
+                }
             }
             else
             {

@@ -34,9 +34,9 @@ namespace CoachPosition.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (passengerCar > 20)
+                if (passengerCar > 22)
                 {
-                    ViewBag.Message = "Номер вагона должен содержать цифры от 1 до 20.";
+                    ViewBag.Message = "Номер вагона должен содержать цифры от 1 до 22.";
                     return View();
                 }
                     
