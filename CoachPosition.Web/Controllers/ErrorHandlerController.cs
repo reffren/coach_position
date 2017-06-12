@@ -4,13 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CoachPosition.Controllers
+namespace CoachPosition.Web.Controllers
 {
-    public class HomeController : Controller
+    public class ErrorHandlerController : Controller
     {
-        //
-        // GET: /Home/
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult NotFound()
         {
             return View();
         }

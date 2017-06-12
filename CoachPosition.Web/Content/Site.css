@@ -143,6 +143,15 @@ footer p {
     text-align:right;
 }
 
+/*ErrorHandler*/
+.error_message {
+    text-align: center;
+    padding-bottom: 40px;
+}
+.error_message img {
+    display: inline;
+}
+
 @media only screen and (max-width : 770px) {
 
 /*Home*/
