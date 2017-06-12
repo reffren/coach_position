@@ -49,3 +49,4 @@ C:\Users\Tim\Documents\Visual Studio 2013\Projects\CoachPosition\CoachPosition.W
 C:\Users\Tim\Documents\Visual Studio 2013\Projects\CoachPosition\CoachPosition.Web\bin\Microsoft.Owin.Security.Cookies.xml
 C:\Users\Tim\Documents\Visual Studio 2013\Projects\CoachPosition\CoachPosition.Web\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\Tim\Documents\Visual Studio 2013\Projects\CoachPosition\CoachPosition.Web\bin\Newtonsoft.Json.xml
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\CoachPosition\CoachPosition.Web\bin\Elmah.dll
