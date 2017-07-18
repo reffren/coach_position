@@ -1,0 +1,5 @@
+﻿@model CoachPosition.Web.Models.SectionModel
+
+@{
+    Layout = null;
+}@Html.Raw("{" + Json.Encode("Train") + ":" + Json.Encode(Model.NumTrain) + "," + Json.Encode("Car") + ":" + Json.Encode(Model.NumCar.ToString()) + "," + Json.Encode("Way") + ":" + Json.Encode(Model.NumWay.ToString())+ "," + Json.Encode("Section") + ":" + Json.Encode(Model.SectionValue) + "}") @*"{\"train\":\"97\",\"car\":\"2\",\"way\":\"2\",\"section\":\"B\"}"*@

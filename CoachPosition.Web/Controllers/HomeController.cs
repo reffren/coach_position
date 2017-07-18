@@ -18,13 +18,9 @@ namespace CoachPosition.Web.Controllers
         {
             _repository = repository;
         }
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         [HttpPost]
-        public ActionResult Index(IndexModel model)
+        public virtual ActionResult Index(IndexModel model)
         {
             string getSection="";
             string numTrain = "";
@@ -110,7 +106,7 @@ namespace CoachPosition.Web.Controllers
             }
         }
 
-        public ActionResult Section(string numTrain, int numCar, string sectionValue, int way)
+        public virtual ActionResult Section(string numTrain, int numCar, string sectionValue, int way)
         {
             SectionModel sectModel = new SectionModel
             {

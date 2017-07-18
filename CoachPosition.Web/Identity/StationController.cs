@@ -17,7 +17,6 @@ namespace CoachPosition.Web.Controllers
         {
             _repository = repository;
         }
-
         public ActionResult AddWay()
         {
             return View();
