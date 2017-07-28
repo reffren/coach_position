@@ -18,6 +18,10 @@ namespace CoachPosition.Web.Controllers
         {
             _repository = repository;
         }
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         [HttpPost]
         public virtual ActionResult Index(IndexModel model)
